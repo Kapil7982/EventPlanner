@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create User</title>
+     <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      
+    }
+    
+    h1 {
+	   text-align:center;
+      color: #333;
+    }
+    
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    input[type="submit"] {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+    
+    .navbar {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+    }
+    
+    .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .navbar li {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    
+    .navbar li a {
+      color: #fff;
+      text-decoration: none;
+      padding: 5px 10px;
+    }
+    
+    .navbar li a:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+   <div class="navbar">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="event.html">Events</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+  
+  <h1>SIGN UP</h1>
+  <form id="userForm" method="POST" action="/api/v3/app/events/customers">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <input type="submit" value="Create">
+  </form>
+
+  <script>
+    document.getElementById('userForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting normally
+
+      const form = document.getElementById('userForm');
+      const formData = new FormData(form);
+
+      fetch('/api/v3/app/events/customers', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+       
+        console.log(data);
+        alert('User created successfully!');
+        form.reset();
+      })
+      .catch(error => {
+        
+        console.error(error);
+        alert('An error occurred while creating the user.');
+      });
+    });
+  </script>
+</body>
+</html>
