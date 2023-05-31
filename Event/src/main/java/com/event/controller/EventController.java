@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v3/app/events")
+@RequestMapping("/api/v3/app")
 public class EventController {
     private final EventService eventService;
 
@@ -21,19 +21,19 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @PostMapping
+    @PostMapping("/events")
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
         Event createdEvent = eventService.createEvent(event);
         return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
     }
 
-    @GetMapping("/getAllEvents")
+    @GetMapping("/events/getAllEvents")
     public ResponseEntity<List<Event>> getAllEvents() {
         List<Event> events = eventService.getAllEvents();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
     
-    @GetMapping("/{eventId}")
+    @GetMapping("/events/{eventId}")
     public ResponseEntity<Event> getEventById(@PathVariable("eventId") Long eventId) {
         Optional<Event> event = eventService.getEventById(eventId);
         if (event.isPresent()) {
@@ -53,7 +53,7 @@ public class EventController {
     }
 
     
-    @PutMapping("/{eventId}")
+    @PutMapping("/events/{eventId}")
     public ResponseEntity<Event> updateEvent(
             @PathVariable("eventId") Long eventId,
             @RequestBody Event event
@@ -62,7 +62,7 @@ public class EventController {
         return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
     }
     
-    @DeleteMapping("/{eventId}")
+    @DeleteMapping("/events/{eventId}")
     public ResponseEntity<Void> deleteEvent(@PathVariable("eventId") Long eventId) throws EventNotFoundExcepiton {
         eventService.deleteEvent(eventId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
